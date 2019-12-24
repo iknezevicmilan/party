@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Party } from './model/party';
 import { Employment } from './model/employment';
 
+// moj komentar
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
