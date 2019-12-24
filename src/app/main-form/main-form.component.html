@@ -1,0 +1,136 @@
+<form novalidate [formGroup]="formGroup" (submit)="onSubmit(party.partyNumber)">
+    <div class="form-group row">
+        <label for="givenName" class="col-2 col-form-label">Given name</label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="givenName" formControlName="givenName">
+        </div>
+        <div class="col-12">
+            <small 
+                class="form-text text-muted alert alert-danger"
+                *ngIf="
+                    formGroup.get('givenName').dirty &&
+                    formGroup.get('givenName').touched &&
+                    formGroup.get('givenName').invalid
+                "
+            >We'll never share your email with anyone else.</small>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label for="surname" class="col-2 col-form-label">Surname</label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="surname" formControlName="surname">
+        </div>
+        <div class="col-12">
+            <small 
+                class="form-text text-muted alert alert-danger"
+                *ngIf="
+                    formGroup.get('surname').dirty &&
+                    formGroup.get('surname').touched &&
+                    formGroup.get('surname').invalid
+                "
+            >We'll never share your email with anyone else.</small>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="parentName" class="col-2 col-form-label">Parent name</label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="parentName" formControlName="parentName">
+        </div>
+        <div class="col-12">
+            <small 
+                class="form-text text-muted alert alert-danger"
+                *ngIf="
+                    formGroup.get('parentName').dirty &&
+                    formGroup.get('parentName').touched &&
+                    formGroup.get('parentName').invalid
+                "
+            >We'll never share your email with anyone else.</small>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Gender</label>
+        <div class="col-10">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="male" value="male" formControlName="gender">
+                <label class="form-check-label" for="male">male</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="female" value="female" formControlName="gender">
+                <label class="form-check-label" for="female">female</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <small 
+                class="form-text text-muted alert alert-danger"
+                *ngIf="
+                    formGroup.get('gender').dirty &&
+                    formGroup.get('gender').touched &&
+                    formGroup.get('gender').invalid
+                "
+            >We'll never share your email with anyone else.</small>
+        </div>
+    </div>
+
+    <div formGroupName="employment">
+        <div class="form-group row">
+            <label for="employer" class="col-2 col-form-label">Employer</label>
+            <div class="col-10">
+                <input type="text" class="form-control" id="employer" formControlName="employer">
+            </div>
+            <div class="col-12">
+                <small 
+                    class="form-text text-muted alert alert-danger"
+                    *ngIf="
+                        formGroup.get('employment.employer').dirty &&
+                        formGroup.get('employment.employer').touched &&
+                        formGroup.get('employment.employer').invalid
+                    "
+                >We'll never share your email with anyone else.</small>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="employmentDate" class="col-2 col-form-label">Employment date</label>
+            <div class="col-10">
+                <input type="date" class="form-control" id="employmentDate" formControlName="employmentDate">
+            </div>
+            <div class="col-12">
+                <small 
+                    class="form-text text-muted alert alert-danger"
+                    *ngIf="
+                        formGroup.get('employment.employmentDate').dirty &&
+                        formGroup.get('employment.employmentDate').touched &&
+                        formGroup.get('employment.employmentDate').invalid
+                    "
+                >We'll never share your email with anyone else.</small>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="employmentPosition" class="col-2 col-form-label">Employment position</label>
+            <div class="col-10">
+                <input type="text" class="form-control" id="employmentPosition" formControlName="employmentPosition">
+            </div>
+            <div class="col-12">
+                <small 
+                    class="form-text text-muted alert alert-danger"
+                    *ngIf="
+                        formGroup.get('employment.employmentPosition').dirty &&
+                        formGroup.get('employment.employmentPosition').touched &&
+                        formGroup.get('employment.employmentPosition').invalid
+                    "
+                >We'll never share your email with anyone else.</small>
+            </div>
+        </div>
+    </div>
+
+    <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="formGroup.invalid"
+    >{{ party.partyNumber ? 'Edit party #' + party.partyNumber : 'Create party'}}</button>
+    <button *ngIf="party.partyNumber" type="button" class="ml-1 btn btn-secondary" (click)="onCancel()">Cancel editing</button>
+</form>
