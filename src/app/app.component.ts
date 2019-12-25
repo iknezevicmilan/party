@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Party } from './model/party';
-import { Employment } from './model/employment';
-
-// moj komentar
+import { PartyService } from './party.service';
 
 @Component({
   selector: 'app-root',
@@ -15,18 +13,11 @@ export class AppComponent implements OnInit {
   parties: Party[] = new Array<Party>();
   mainFormParty: Party = new Party();
 
-  ngOnInit() {
-    const employment: Employment = new Employment().initConstructor('Asseco SEE', new Date(), 'Software developer');
-    
-    this.parties = new Array<Party>(
-      new Party().initConstructor(1, 'Milan', 'Knezevic', 'Nikola', 'male', employment),
-      new Party().initConstructor(2, 'Branko', 'Simovic', null, 'male', employment),
-      new Party().initConstructor(3, 'Luka', 'Krivacevic', null, 'male', employment),
-      new Party().initConstructor(4, 'Stefan', 'Milunovic', null, 'male', employment),
-      new Party().initConstructor(5, 'Stefan', 'Cekic', null, 'male', employment)
-    );
+  constructor(private partyService: PartyService) { }
 
-    this.cnt = 5;
+  ngOnInit() {
+    this.parties = this.partyService.getParties();
+    this.cnt = this.parties.length - 1;
   }
 
   handleMainFormCreate(party: Party) {

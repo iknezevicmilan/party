@@ -12,7 +12,10 @@
                     formGroup.get('givenName').touched &&
                     formGroup.get('givenName').invalid
                 "
-            >We'll never share your email with anyone else.</small>
+            >
+                <span *ngIf="formGroup.get('givenName').errors.required">Given name is required. </span>
+                <span *ngIf="formGroup.get('givenName').errors.name">Given name must be a name. </span>
+            </small>
         </div>
     </div>
     
@@ -29,7 +32,10 @@
                     formGroup.get('surname').touched &&
                     formGroup.get('surname').invalid
                 "
-            >We'll never share your email with anyone else.</small>
+            >
+                <span *ngIf="formGroup.get('surname').errors.required">Surname is required. </span>
+                <span *ngIf="formGroup.get('surname').errors.name">Surname must be a name. </span>
+            </small>
         </div>
     </div>
 
@@ -46,7 +52,9 @@
                     formGroup.get('parentName').touched &&
                     formGroup.get('parentName').invalid
                 "
-            >We'll never share your email with anyone else.</small>
+            >
+                <span *ngIf="formGroup.get('parentName').errors.name">Parent name must be a name. </span>
+            </small>
         </div>
     </div>
     
@@ -63,14 +71,15 @@
             </div>
         </div>
         <div class="col-12">
-            <small 
+            <!--<small 
                 class="form-text text-muted alert alert-danger"
                 *ngIf="
                     formGroup.get('gender').dirty &&
                     formGroup.get('gender').touched &&
                     formGroup.get('gender').invalid
                 "
-            >We'll never share your email with anyone else.</small>
+            >
+            </small>-->
         </div>
     </div>
 
@@ -88,7 +97,10 @@
                         formGroup.get('employment.employer').touched &&
                         formGroup.get('employment.employer').invalid
                     "
-                >We'll never share your email with anyone else.</small>
+                >
+                    <span *ngIf="formGroup.get('employment.employer').errors.required">Employer is required. </span>
+                    <span *ngIf="formGroup.get('employment.employer').errors.name">Employer must be a name. </span>
+                </small>
             </div>
         </div>
 
@@ -105,7 +117,10 @@
                         formGroup.get('employment.employmentDate').touched &&
                         formGroup.get('employment.employmentDate').invalid
                     "
-                >We'll never share your email with anyone else.</small>
+                >
+                    <span *ngIf="formGroup.get('employment.employmentDate').errors.required">Employment date is required. </span>
+                    <span *ngIf="formGroup.get('employment.employmentDate').errors.futureDate">Employment date cannot be future date. </span>
+                </small>
             </div>
         </div>
 
@@ -122,7 +137,10 @@
                         formGroup.get('employment.employmentPosition').touched &&
                         formGroup.get('employment.employmentPosition').invalid
                     "
-                >We'll never share your email with anyone else.</small>
+                >
+                    <span *ngIf="formGroup.get('employment.employmentPosition').errors.required">Employment position is required. </span>
+                    <span *ngIf="formGroup.get('employment.employmentPosition').errors.name">Employment position must be a name. </span>
+                </small>
             </div>
         </div>
     </div>

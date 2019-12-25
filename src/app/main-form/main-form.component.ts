@@ -1,7 +1,31 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Party } from '../model/party';
 import { DatePipe } from '@angular/common';
+
+var datePipe: DatePipe = new DatePipe("en-US");
+var format: string = "y-MM-dd";
+
+function nameValidator(): ValidatorFn {
+  return (c: AbstractControl): {[key: string]: boolean} | null => {
+    if(c.value == null) return { 'name': true };
+
+    if(!(<string>c.value).match('^[a-zA-Z ]*$')) 
+      return { 'name': true };
+    else
+      return null;
+  };
+}
+
+function futureDateValidator(): ValidatorFn {
+  return (c: AbstractControl): {[key: string]: boolean} | null => {
+    if(c.value == null) return { 'futureDate': true }
+
+    
+    if((new Date(c.value)).getTime() > new Date().getTime()) return { 'futureDate': true };
+    return null;
+  }
+}
 
 export class MainFormParty {
   partyNumber: number;
@@ -14,10 +38,6 @@ export class MainFormParty {
   styleUrls: ['./main-form.component.css']
 })
 export class MainFormComponent implements OnInit, OnChanges {
-
-  datePipe: DatePipe = new DatePipe("en-US");
-  format: string = "y-MM-dd";
-
   formGroup: FormGroup;
   
   @Output() handleCreate: EventEmitter<Party> = new EventEmitter<Party>();
@@ -30,14 +50,14 @@ export class MainFormComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.formGroup = this.fb.group({
-      givenName: [this.party.givenName, [Validators.required]],
-      surname: [this.party.surname, [Validators.required]],
-      parentName: [this.party.parentName],
+      givenName: [this.party.givenName, [Validators.required, nameValidator()]],
+      surname: [this.party.surname, [Validators.required, nameValidator()]],
+      parentName: [this.party.parentName, [nameValidator()]],
       gender: [this.party.gender, [Validators.required]],
       employment: this.fb.group({
-        employer: [this.party.employment.employer, [Validators.required]],
-        employmentDate: [this.party.employment.employmentDate, [Validators.required]],
-        employmentPosition: [this.party.employment.employmentPosition, [Validators.required]]
+        employer: [this.party.employment.employer, [Validators.required, nameValidator()]],
+        employmentDate: [this.party.employment.employmentDate, [Validators.required, futureDateValidator()]],
+        employmentPosition: [this.party.employment.employmentPosition, [Validators.required, nameValidator()]]
       })
     });
   }
@@ -55,7 +75,7 @@ export class MainFormComponent implements OnInit, OnChanges {
         }
       });
 
-      this.formGroup.get("employment.employmentDate").setValue(this.datePipe.transform(this.party.employment.employmentDate, this.format));
+      this.formGroup.get("employment.employmentDate").setValue(datePipe.transform(this.party.employment.employmentDate, format));
     }
   }
 
